@@ -12,7 +12,6 @@ using namespace std;
 //     cout << "printing array is done";
 //     return;
 // }
-
 // declaration of array
 //  int main()
 //  {
@@ -29,14 +28,14 @@ using namespace std;
 //      }
 //      return 0;
 //  }
-
 //
 // int main()
 // {
 //     int n = 20;
 //     int fourth[n] = {2300};
 //     printarr(fourth, 20);
-
-
 //     return 0;
 // }
+
+
+
