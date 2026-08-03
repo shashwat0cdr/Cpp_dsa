@@ -4,19 +4,24 @@
 
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-    bool isPossible(vector<int>& nums, int n, int m, int mid) {
+    bool isPossible(vector<int> &nums, int n, int m, int mid)
+    {
 
         int arrcount = 1;
         int sum_arr = 0;
 
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++)
+        {
 
-            if (sum_arr + nums[i] <= mid) {
+            if (sum_arr + nums[i] <= mid)
+            {
                 sum_arr += nums[i];
             }
-            else {
+            else
+            {
 
                 arrcount++;
 
@@ -30,29 +35,34 @@ public:
         return true;
     }
 
-    int splitArray(vector<int>& nums, int k) {
+    int splitArray(vector<int> &nums, int k)
+    {
 
         int n = nums.size();
 
         int s = *max_element(nums.begin(), nums.end());
 
         int sum = 0;
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++)
+        {
             sum += nums[i];
         }
 
         int e = sum;
         int ans = -1;
 
-        while (s <= e) {
+        while (s <= e)
+        {
 
             int mid = s + (e - s) / 2;
 
-            if (isPossible(nums, n, k, mid)) {
+            if (isPossible(nums, n, k, mid))
+            {
                 ans = mid;
                 e = mid - 1;
             }
-            else {
+            else
+            {
                 s = mid + 1;
             }
         }
@@ -61,17 +71,19 @@ public:
     }
 };
 
-int main() {
+int main()
+{
 
     Solution obj;
 
     // Test Case 1
-    vector<int> nums1 = {7, 2, 5, 10, 8};
+    vector<int> nums1 = {10, 20, 30, 40, 50, 60};
     int k1 = 2;
 
     cout << "Test Case 1" << endl;
     cout << "Answer = " << obj.splitArray(nums1, k1) << endl;
-    cout << "Expected = 18" << endl << endl;
+    cout << "Expected = 110" << endl
+         << endl;
 
     // Test Case 2
     vector<int> nums2 = {1, 2, 3, 4, 5};
