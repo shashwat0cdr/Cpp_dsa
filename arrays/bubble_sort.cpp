@@ -15,7 +15,7 @@ void bubbleSort(int arr[], int n)
             }
         }
         if (!swapped)
-         break;
+            break;
     }
 }
 
@@ -25,7 +25,8 @@ int main()
     int n = sizeof(arr) / sizeof(arr[0]);
     bubbleSort(arr, n);
     cout << "Sorted array: \n";
-    for (int i = 0; i < n; i++){
+    for (int i = 0; i < n; i++)
+    {
         cout << arr[i] << " ";
     }
     return 0;
