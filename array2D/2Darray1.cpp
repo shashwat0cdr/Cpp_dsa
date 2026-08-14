@@ -1,4 +1,5 @@
 #include <iostream>
+#include <climits>
 using namespace std;
 
 bool ispresent(int arr[][4], int target, int row, int col)
@@ -15,10 +16,11 @@ bool ispresent(int arr[][4], int target, int row, int col)
     }
     return 0;
 }
+
 // to print row wise sum
-void printSum(int arr[][4], int row, int col)
+void printSum_row(int arr[][4], int row, int col)
 {
-    cout << "printing sum :- " << endl;
+    cout << "printing sum row wise:- " << endl;
     for (int row = 0; row < 3; row++)
     {
         int sum = 0;
@@ -28,6 +30,46 @@ void printSum(int arr[][4], int row, int col)
         }
         cout << sum << " ";
     }
+    cout << endl;
+}
+
+// to print col wise
+void printSum_col(int arr[][4], int row, int col)
+{
+    cout << "printing sum col wise:- " << endl;
+    for (int col = 0; col < 4; col++)
+    {
+        int sum = 0;
+        for (int row = 0; row < 3; row++)
+        {
+            sum += arr[row][col];
+        }
+        cout << sum << " ";
+    }
+    cout << endl;
+}
+
+// to getting the largest row sum
+int largestRowSum(int arr[][4], int row, int col)
+{
+    int maxi = INT_MIN;
+    int rowIndex = -1;
+    for (int row = 0; row < 3; row++)
+    {
+        int sum = 0;
+        for (int col = 0; col < 4; col++)
+        {
+            sum += arr[row][col];
+        }
+        if (sum > maxi)
+        {
+            maxi = sum;
+            rowIndex = row;
+        }
+    }
+
+    cout << "the maximum sum is " << maxi << endl;
+    return rowIndex;
 }
 
 int main()
@@ -64,21 +106,26 @@ int main()
         }
         cout << endl;
     }
+    /*
+        cout << "enter the element to search the array: ";
+        int target;
+        cin >> target;
 
-    cout << "enter the element to search the array: ";
-    int target;
-    cin >> target;
+        if (ispresent(arr, target, 3, 4))
+        {
+            cout << "element found" << endl;
+        }
+        else
+        {
+            cout << "element not found" << endl;
+        }
 
-    if (ispresent(arr, target, 3, 4))
-    {
-        cout << "element found" << endl;
-    }
-    else{
-        cout << "element not found" << endl;
-    }
-
-    // row wise sum
-    printSum(arr,3,4);
+        // row wise sum
+        printSum_row(arr, 3, 4);
+        printSum_col(arr, 3, 4);
+    */
+    int ansIndex = largestRowSum(arr, 3, 4);
+    cout << "The max row is at index " << ansIndex  << endl;
 
     return 0;
 }
