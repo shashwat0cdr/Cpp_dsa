@@ -1,11 +1,12 @@
 #include <iostream>
 using namespace std;
 
-void update(int **p)
+void update(int **p2)
 {
     // p = p + 1; // no changes
-    *p = *p + 1;
-    // **p = **p + 1;
+   // p2 = p2 + 1;
+   **p2 = **p2 + 1; 
+   // **p = **p + 1;
 }
 int main()
 {
@@ -27,16 +28,16 @@ int main()
     // cout << p2 << endl;
     // cout << &p << endl;
 
-    cout << endl
-         << endl;
-    cout << "before " << i << endl;
-    cout << "before " << p << endl;
-    cout << "before " << p2 << endl;
-    update(p2);
-    cout << "after " << i << endl;
-    cout << "after  " << p << endl;
-    cout << "after  " << p2 << endl;
-    cout << endl;
+    // cout << endl
+    //      << endl;
+    // cout << "before " << i << endl;
+    // cout << "before " << p << endl;
+    // cout << "before " << p2 << endl;
+    // update(p2);
+    // cout << "after " << i << endl;
+    // cout << "after  " << p << endl;
+    // cout << "after  " << p2 << endl;
+    // cout << endl;
 
     return 0;
 }
