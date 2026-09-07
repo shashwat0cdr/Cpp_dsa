@@ -1,17 +1,17 @@
 #include <iostream>
 using namespace std;
 
-
-void merge(int *arr, int s, int e){
+void merge(int *arr, int s, int e)
+{
 
     int mid = s + (e - s) / 2;
-    int len1 = mid -s +1;
+    int len1 = mid - s + 1;
     int len2 = e - mid;
 
     int *first = new int[len1];
     int *second = new int[len2];
 
-    int k = s;
+    int k = s; // k = first array index
     for (int i = 0; i < len1; i++)
     {
         first[i] = arr[k++];
@@ -25,7 +25,6 @@ void merge(int *arr, int s, int e){
 
     int index1 = 0;
     int index2 = 0;
-    k = s; // k = main array index
     while (index1 < len1 && index2 < len2)
     {
         if (first[index1] < second[index2])
@@ -59,14 +58,13 @@ void mergeSort(int arr[], int s, int e)
     }
     int mid = s + (e - s) / 2;
     // left part
-    mergeSort(arr , s, mid);
+    mergeSort(arr, s, mid);
 
-    // right part 
+    // right part
     mergeSort(arr, mid + 1, e);
 
-    // merge 
+    // merge
     merge(arr, s, e);
-
 }
 
 int main()
