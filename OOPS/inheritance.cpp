@@ -39,7 +39,7 @@ int main()
 
     male m1;
     cout << m1.height << endl;
-     
+      
 
     // male object1;
 
