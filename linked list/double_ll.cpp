@@ -16,6 +16,17 @@ public:
         this->prev = NULL;
         this->next = NULL;
     }
+
+    ~Node()
+    {
+        int value = this->data;
+        if (next != NULL)
+        {
+            delete next;
+            next = NULL;
+        }
+        cout << "Memory free for node with data " << value << endl;
+    }
 };
 
 // travesing
@@ -109,6 +120,42 @@ void InsertAtPos(Node *&head, Node *&tail, int pos, int d)
     temp->next = nodeToInsert;
     nodeToInsert->prev = temp;
 }
+
+void deleteNode(int pos, Node *&head, Node *&tail)
+{
+    // start or first node
+    if (pos == 1)
+    {
+        Node *temp = head;
+        temp->next->prev = NULL;
+        head = temp->next;
+        temp->next = NULL;
+        delete temp;
+    }
+    else
+    {
+        // deleting any node
+        Node *curr = head;
+        Node *prev = NULL;
+
+        int cnt = 1;
+        while (cnt < pos)
+        {
+            prev = curr;
+            curr = curr->next;
+            cnt++;
+        }
+        curr -> prev = NULL;
+        prev -> next = curr -> next;
+        curr-> next = NULL;
+        delete curr;
+        if (curr == tail)
+        {
+            tail = prev;
+        }
+    }
+}
+
 int main()
 {
 
@@ -136,5 +183,9 @@ int main()
     InsertAtPos(head, tail, 7, 95);
     print(head);
 
+    deleteNode(1,head,tail);
+    print(head);
+    cout << "head: " << head -> data << endl;
+    cout << "tail: " << tail -> data << endl;
     return 0;
 }
