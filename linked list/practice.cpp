@@ -13,6 +13,18 @@ public:
         this->data = data;
         this->next = NULL;
     }
+
+    // destructor
+    ~Node()
+    {
+        int value = this->data;
+        if (this->data != NULL)
+        {
+            delete next;
+            this->next = NULL;
+        }
+        cout << "memory is free for node with data " << value << endl;
+    }
 };
 
 void insertAtHead(Node *&head, int d)
@@ -60,6 +72,34 @@ void insertAtPos(Node *&head, Node *&tail, int pos, int d)
     temp->next = nodeToInsert;
 }
 
+void deleteNode(int pos, Node *&head)
+{
+    // first node handle
+    if (pos == 1)
+    {
+        Node *temp = head;
+        head = head->next;
+        temp->next = NULL;
+        delete temp;
+    }
+    else
+    {
+        // deleting any node handle
+        Node *curr = head;
+        Node *prev = NULL;
+        int cnt = 1;
+        while(cnt < pos){
+            prev = curr;
+            curr = curr -> next;
+            cnt++;
+        }
+        prev -> next = curr -> next;
+        curr -> next = NULL;
+        delete curr;
+
+    }
+}
+
 void print(Node *&head)
 {
     Node *temp = head;
@@ -75,8 +115,8 @@ int main()
 {
     // creating a node
     Node *node1 = new Node(10);
-    //cout << node1->data << endl;
-    //cout << node1->next << endl;
+    // cout << node1->data << endl;
+    // cout << node1->next << endl;
 
     Node *head = node1;
     Node *tail = node1;
@@ -89,6 +129,9 @@ int main()
     print(head);
     cout << "head: " << head->data << endl;
     cout << "tail: " << tail->data << endl;
+
+    deleteNode(4, head);
+    print(head);
 
     return 0;
 }
