@@ -1,5 +1,4 @@
-// Singly linked list  
-
+// Singly Linked List
 #include <iostream>
 using namespace std;
 
@@ -9,141 +8,286 @@ public:
     int data;
     Node *next;
 
-    // constructor
+    // Constructor
     Node(int data)
     {
         this->data = data;
         this->next = NULL;
     }
 
-    // destructor
+    // Destructor
     ~Node()
     {
-        int value = this->data;
-        if (this->next != NULL)
-        {
-            delete next;
-            this->next = NULL;
-        }
-        cout << "memory is free for node with data " << value << endl;
+        cout << "Memory freed for node with data "
+             << data << endl;
     }
 };
 
-void insertAtHead(Node *&head, int d)
+// ================= INSERT AT HEAD =================
+
+void insertAtHead(Node *&head, Node *&tail, int d)
 {
-    // new node create
-    Node *temp = new Node(d);
-    temp->next = head;
-    head = temp;
+    Node *newNode = new Node(d);
+
+    // Empty list
+    if (head == NULL)
+    {
+        head = tail = newNode;
+        return;
+    }
+
+    newNode->next = head;
+    head = newNode;
 }
 
-void insertAtTail(Node *&tail, int d)
+// ================= INSERT AT TAIL =================
+
+void insertAtTail(Node *&head, Node *&tail, int d)
 {
-    Node *temp = new Node(d);
-    tail->next = temp;
-    tail = tail->next;
+    Node *newNode = new Node(d);
+
+    // Empty list
+    if (head == NULL)
+    {
+        head = tail = newNode;
+        return;
+    }
+
+    tail->next = newNode;
+    tail = newNode;
 }
+
+// ================= INSERT AT POSITION =================
 
 void insertAtPosition(Node *&head, Node *&tail, int pos, int d)
 {
-    if (pos == 1)
+    // Position 1
+    if (pos <= 1)
     {
-        insertAtHead(head, d);
+        insertAtHead(head, tail, d);
+        return;
+    }
+
+    // Empty list
+    if (head == NULL)
+    {
+        cout << "Invalid position!" << endl;
         return;
     }
 
     Node *temp = head;
-    int cnt = 1;
 
-    while (cnt < pos - 1)
+    // Reach node at pos - 1
+    for (int i = 1; i < pos - 1 && temp->next != NULL; i++)
     {
         temp = temp->next;
-        cnt++;
     }
-    if (temp->next == NULL)
+
+    // If inserting after current tail
+    if (temp == tail)
     {
-        insertAtTail(tail, d);
+        insertAtTail(head, tail, d);
         return;
     }
 
-    // creating a node for d
-    Node *nodeToInsert = new Node(d);
+    Node *newNode = new Node(d);
 
-    nodeToInsert->next = temp->next;
-    temp->next = nodeToInsert;
+    newNode->next = temp->next;
+    temp->next = newNode;
 }
 
-void deleteNode(int pos, Node *&head, Node *&tail)
-{
+// ================= DELETE NODE =================
 
-    // deleting first node
+void deleteNode(Node *&head, Node *&tail, int pos)
+{
+    // Empty list
+    if (head == NULL)
+    {
+        cout << "List is empty!" << endl;
+        return;
+    }
+
+    // Delete first node
     if (pos == 1)
     {
         Node *temp = head;
+
         head = head->next;
-        // memory free start node
+
+        // If only one node existed
+        if (head == NULL)
+        {
+            tail = NULL;
+        }
+
         temp->next = NULL;
         delete temp;
-    }
-    else
-    {
-        // deleting any node
-        Node *curr = head;
-        Node *prev = NULL;
 
-        int cnt = 1;
-        while (cnt < pos)
-        {
-            prev = curr;
-            curr = curr->next;
-            cnt++;
-        }
-        prev->next = curr->next;
-        curr->next = NULL;
-        delete curr;
-        if (curr == tail)
-        {
-            tail = prev;
-        }
+        return;
     }
+
+    Node *prev = head;
+    Node *curr = head->next;
+
+    // Reach required position
+    for (int i = 2; i < pos && curr != NULL; i++)
+    {
+        prev = curr;
+        curr = curr->next;
+    }
+
+    // Invalid position
+    if (curr == NULL)
+    {
+        cout << "Invalid position!" << endl;
+        return;
+    }
+
+    // If deleting tail
+    if (curr == tail)
+    {
+        tail = prev;
+    }
+
+    prev->next = curr->next;
+    curr->next = NULL;
+
+    delete curr;
 }
 
-void print(Node *&head)
+// ================= PRINT =================
+
+void print(Node *head)
 {
     Node *temp = head;
 
     while (temp != NULL)
     {
-        cout << temp->data << " ";
+        cout << temp->data << " -> ";
         temp = temp->next;
     }
-    cout << endl;
+
+    cout << "NULL" << endl;
 }
+
+// ================= REVERSE =================
+// recursive approach
+Node *reverse1(Node *head)
+{
+    // base case
+    if (head == NULL || head->next == NULL)
+    {
+        return head;
+    }
+
+    Node *smallHead = reverse1(head->next);
+
+    head->next->next = head;
+    head->next = NULL;
+
+    return smallHead;
+}
+void reverse(Node *&head, Node *curr, Node *prev)
+{
+    // base case
+    if (curr == NULL)
+    {
+        head = prev;
+        return;
+    }
+
+    // recursive case
+    Node *forward = curr->next;
+    reverse(head, forward, curr);
+    curr->next = prev;
+};
+
+// normal approach
+Node *reverseList(Node *head)
+{
+    return reverse1(head);
+    // Node *prev = NULL;
+    // Node *curr = head;
+
+    // while (curr != NULL)
+    // {
+    //     Node *forward = curr->next;
+
+    //     curr->next = prev;
+
+    //     prev = curr;
+    //     curr = forward;
+    // }
+
+    // reverse(head, curr, prev);
+
+    // return head;
+}
+
+// ================= MAIN =================
 
 int main()
 {
-    // created a new node
-    Node *node1 = new Node(10);
-    // cout << node1->data << endl;
-    // cout << node1->next << endl;
+    Node *head = NULL;
+    Node *tail = NULL;
 
-    // head pointed to new node
-    Node *head = node1;
-    Node *tail = node1;
-    print(head);
-    insertAtTail(tail, 12);
-    print(head);
-    insertAtTail(tail, 15);
-    print(head);
-    insertAtPosition(head, tail, 4, 22);
+    // Insert elements
+    insertAtTail(head, tail, 10);
+    insertAtTail(head, tail, 12);
+    insertAtTail(head, tail, 15);
+
+    cout << "Original List: ";
     print(head);
 
-    cout << "head: " << head->data << endl;
-    cout << "tail: " << tail->data << endl;
+    // Insert at position
+    insertAtPosition(head, tail, 2, 11);
 
-    deleteNode(4, head, tail);
+    cout << "After inserting 11 at position 2: ";
     print(head);
-    cout << "head: " << head->data << endl;
-    cout << "tail: " << tail->data << endl;
+
+    // Insert at head
+    insertAtHead(head, tail, 5);
+
+    cout << "After inserting 5 at head: ";
+    print(head);
+
+    // Insert at tail
+    insertAtTail(head, tail, 20);
+
+    cout << "After inserting 20 at tail: ";
+    print(head);
+
+    cout << "\nHead: " << head->data << endl;
+    cout << "Tail: " << tail->data << endl;
+
+    // Delete node
+    deleteNode(head, tail, 3);
+
+    cout << "\nAfter deleting position 3: ";
+    print(head);
+
+    cout << "Head: " << head->data << endl;
+    cout << "Tail: " << tail->data << endl;
+
+    // Reverse
+    head = reverseList(head);
+
+    // IMPORTANT: after reversing, old head becomes tail
+    // So update tail
+    Node *temp = head;
+
+    while (temp->next != NULL)
+    {
+        temp = temp->next;
+    }
+
+    tail = temp;
+
+    cout << "\nReversed List: ";
+    print(head);
+
+    cout << "Head: " << head->data << endl;
+    cout << "Tail: " << tail->data << endl;
+
     return 0;
 }
