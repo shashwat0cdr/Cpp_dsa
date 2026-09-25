@@ -223,7 +223,58 @@ Node *reverseList(Node *head)
 
     // return head;
 }
+// ============== Middle of list =================
 
+int getLength(Node *head)
+{
+    int len = 0;
+    while (head != NULL)
+    {
+        len++;
+        head = head->next;
+    }
+
+    return len;
+}
+// approach 1 but not optimized
+Node *findMiddle(Node *head)
+{
+    int len = getLength(head);
+    int ans = (len / 2);
+    Node *temp = head;
+    int cnt = 0;
+    while (cnt < ans)
+    {
+        temp = temp->next;
+        cnt++;
+    }
+    return temp;
+}
+
+// approach 2 but optimized
+Node *getMiddle(Node *head)
+{
+
+    // empty list
+    if (head == NULL || head -> next == NULL)
+    {
+        return head;
+    }
+    if(head -> next -> next == NULL){
+        return head -> next;
+    }
+
+    Node* slow = head;
+    Node* fast = head-> next;
+    while(fast != NULL){
+        fast = fast -> next;
+        if(fast != NULL){
+            fast = fast -> next;
+        } 
+        slow = slow -> next;
+    }
+    return slow;
+}
 // ================= MAIN =================
 
 int main()
@@ -237,40 +288,40 @@ int main()
     insertAtTail(head, tail, 15);
 
     cout << "Original List: ";
-    print(head);
+    //print(head);
 
     // Insert at position
     insertAtPosition(head, tail, 2, 11);
 
-    cout << "After inserting 11 at position 2: ";
-    print(head);
+    //cout << "After inserting 11 at position 2: ";
+    //print(head);
 
     // Insert at head
     insertAtHead(head, tail, 5);
 
-    cout << "After inserting 5 at head: ";
-    print(head);
+    //cout << "After inserting 5 at head: ";
+   // print(head);
 
     // Insert at tail
     insertAtTail(head, tail, 20);
 
-    cout << "After inserting 20 at tail: ";
+    //cout << "After inserting 20 at tail: ";
     print(head);
 
-    cout << "\nHead: " << head->data << endl;
-    cout << "Tail: " << tail->data << endl;
+   // cout << "\nHead: " << head->data << endl;
+   // cout << "Tail: " << tail->data << endl;
 
     // Delete node
-    deleteNode(head, tail, 3);
+    //deleteNode(head, tail, 3);
 
-    cout << "\nAfter deleting position 3: ";
-    print(head);
+   // cout << "\nAfter deleting position 3: ";
+   // print(head);
 
-    cout << "Head: " << head->data << endl;
-    cout << "Tail: " << tail->data << endl;
+   // cout << "Head: " << head->data << endl;
+   // cout << "Tail: " << tail->data << endl;
 
     // Reverse
-    head = reverseList(head);
+    //head = reverseList(head);
 
     // IMPORTANT: after reversing, old head becomes tail
     // So update tail
@@ -283,11 +334,20 @@ int main()
 
     tail = temp;
 
-    cout << "\nReversed List: ";
-    print(head);
+    //cout << "\nReversed List: ";
+    //print(head);
 
     cout << "Head: " << head->data << endl;
     cout << "Tail: " << tail->data << endl;
 
+    Node *ans = getMiddle(head);
+    if (ans != NULL)
+    {
+        cout << "Middle: " << ans->data << endl;
+    }
+    else
+    {
+        cout << "List is empty!" << endl;
+    }
     return 0;
 }
