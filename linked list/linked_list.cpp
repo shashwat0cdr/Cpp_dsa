@@ -1,5 +1,6 @@
 // Singly Linked List
 #include <iostream>
+#include <map>
 using namespace std;
 
 class Node
@@ -256,31 +257,185 @@ Node *getMiddle(Node *head)
 {
 
     // empty list
-    if (head == NULL || head -> next == NULL)
+    if (head == NULL || head->next == NULL)
     {
         return head;
     }
-    if(head -> next -> next == NULL){
-        return head -> next;
+    if (head->next->next == NULL)
+    {
+        return head->next;
     }
 
-    Node* slow = head;
-    Node* fast = head-> next;
-    while(fast != NULL){
-        fast = fast -> next;
-        if(fast != NULL){
-            fast = fast -> next;
-        } 
-        slow = slow -> next;
+    Node *slow = head;
+    Node *fast = head->next;
+    while (fast != NULL)
+    {
+        fast = fast->next;
+        if (fast != NULL)
+        {
+            fast = fast->next;
+        }
+        slow = slow->next;
     }
     return slow;
 }
+
+// ======================== K - reverse ==================================
+
+Node *K_reverse(Node *head, int k)
+{
+    // base call
+    if (head == NULL || k <= 1)
+    {
+        return head;
+    }
+
+    // step 1: reverse first k nodes
+    Node *next = NULL;
+    Node *curr = head;
+    Node *prev = NULL;
+
+    int count = 0;
+    while (curr != NULL && count < k)
+    {
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+        count++;
+    }
+
+    // step 2 recursion
+    if (next != NULL)
+    {
+        head->next = K_reverse(next, k);
+    }
+
+    // step -3 return
+    return prev;
+}
+
+// ================= CIRCULAR CHECK =================
+bool isCircular(Node *head)
+{
+    // empty list case
+    if (head == NULL)
+    {
+        return false;
+    }
+
+    Node *temp = head->next;
+    while (temp != NULL && temp != head)
+    {
+        temp = temp->next;
+    }
+
+    return temp == head;
+}
+
+// =================== Loop Check ===================
+
+bool detectLoop(Node *head)
+{
+    if (head == NULL)
+    {
+        return false;
+    }
+
+    map<Node *, bool> visited;
+
+    Node *temp = head;
+    while (temp != NULL)
+    {
+        if (visited[temp] == true)
+        {
+            cout << "present on element " << temp->data << endl;
+            return true;
+        }
+        visited[temp] = true;
+        temp = temp->next;
+    }
+
+    return false;
+}
+// approach 2
+
+Node *floydDetectLoop(Node *head)
+{
+    if (head == NULL)
+        return NULL;
+
+    Node *slow = head;
+    Node *fast = head;
+
+    while (fast != NULL && fast->next != NULL)
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+
+        if (slow == fast)
+        {
+            cout << "Loop present at " << slow->data << endl;
+            return slow;
+        }
+    }
+
+    return NULL;
+}
+
+// ============ Starting Node ================
+Node *getStartingNode(Node *head)
+{
+    if (head == NULL)
+    {
+        return NULL;
+    }
+
+    Node *intersection = floydDetectLoop(head);
+    if (intersection == NULL)
+    {
+        return NULL;
+    }
+
+    Node *slow = head;
+
+    while (slow != intersection)
+    {
+        slow = slow->next;
+        intersection = intersection->next;
+    }
+
+    return slow;
+}
+
+// =============== removal of loop ================
+
+void removeLoop(Node *head)
+{
+
+    if (head == NULL)
+    {
+        return;
+    }
+
+    Node *startOfLoop = getStartingNode(head);
+    Node *temp = startOfLoop;
+
+    while (temp->next != startOfLoop)
+    {
+        temp = temp->next;
+    }
+
+    temp->next = NULL;
+}
+
 // ================= MAIN =================
 
 int main()
 {
-    Node *head = NULL;
-    Node *tail = NULL;
+    Node *node1 = new Node(10);
+    Node *head = node1;
+    Node *tail = node1;
 
     // Insert elements
     insertAtTail(head, tail, 10);
@@ -288,66 +443,105 @@ int main()
     insertAtTail(head, tail, 15);
 
     cout << "Original List: ";
-    //print(head);
+    // print(head);
 
     // Insert at position
     insertAtPosition(head, tail, 2, 11);
 
-    //cout << "After inserting 11 at position 2: ";
-    //print(head);
+    // cout << "After inserting 11 at position 2: ";
+    // print(head);
 
     // Insert at head
     insertAtHead(head, tail, 5);
 
-    //cout << "After inserting 5 at head: ";
-   // print(head);
+    // cout << "After inserting 5 at head: ";
+    // print(head);
 
     // Insert at tail
     insertAtTail(head, tail, 20);
 
-    //cout << "After inserting 20 at tail: ";
+    // cout << "After inserting 20 at tail: ";
     print(head);
 
-   // cout << "\nHead: " << head->data << endl;
-   // cout << "Tail: " << tail->data << endl;
+    tail->next = head->next;
 
-    // Delete node
-    //deleteNode(head, tail, 3);
-
-   // cout << "\nAfter deleting position 3: ";
-   // print(head);
-
-   // cout << "Head: " << head->data << endl;
-   // cout << "Tail: " << tail->data << endl;
-
-    // Reverse
-    //head = reverseList(head);
-
-    // IMPORTANT: after reversing, old head becomes tail
-    // So update tail
-    Node *temp = head;
-
-    while (temp->next != NULL)
-    {
-        temp = temp->next;
-    }
-
-    tail = temp;
-
-    //cout << "\nReversed List: ";
-    //print(head);
-
-    cout << "Head: " << head->data << endl;
+    cout << "\nHead: " << head->data << endl;
     cout << "Tail: " << tail->data << endl;
 
-    Node *ans = getMiddle(head);
-    if (ans != NULL)
+    // Delete node
+    // deleteNode(head, tail, 3);
+
+    // cout << "\nAfter deleting position 3: ";
+    // print(head);
+
+    // cout << "Head: " << head->data << endl;
+    // cout << "Tail: " << tail->data << endl;
+
+    // Reverse
+    // head = reverseList(head);
+
+    // IMPORTANT: after reversing, old head becomes tail.
+    // Do not iterate through the list after creating a cycle.
+    // tail = temp;
+
+    // cout << "\nReversed List: ";
+    // print(head);
+
+    // cout << "Head: " << head->data << endl;
+    // cout << "Tail: " << tail->data << endl;
+
+    // Node *ans = getMiddle(head);
+    // if (ans != NULL)
+    // {
+    //     // cout << "Middle: " << ans->data << endl;
+    // }
+    // else
+    // {
+    //     // cout << "List is empty!" << endl;
+    // }
+
+    // head = K_reverse(head, 2);
+    // Node *temp2 = head;
+
+    // while (temp2 != NULL && temp2->next != NULL)
+    // {
+    //     temp2 = temp2->next;
+    // }
+
+    // tail = temp2;
+
+    // cout << "After K-reversal (k=2): ";
+    // print(head);
+    // cout << "New Head: " << head->data << endl;
+    // cout << "New Tail: " << tail->data << endl;
+
+    // ================= CIRCULAR CHECK =================
+
+    // if (isCircular(head))
+    // {
+    //     cout << "Linked List is Circular" << endl;
+    // }
+    // else
+    // {
+    //     cout << "Linked List is NOT Circular" << endl;
+    // }
+
+    if (floydDetectLoop(head) != NULL)
     {
-        cout << "Middle: " << ans->data << endl;
+        cout << "Cycle is present" << endl;
+        Node *start = getStartingNode(head);
+        if (start != NULL)
+        {
+            cout << "Loop starting at: " << start->data << endl;
+        }
     }
     else
     {
-        cout << "List is empty!" << endl;
+        cout << "no cycle" << endl;
     }
+
+    removeLoop(head);
+    print(head);
+
     return 0;
 }
