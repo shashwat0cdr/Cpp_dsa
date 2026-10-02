@@ -429,6 +429,73 @@ void removeLoop(Node *head)
     temp->next = NULL;
 }
 
+// ================== remove duplicates ===================
+//- sorted linked list
+Node *removeDupicates(Node *head)
+{
+    if (head == NULL)
+    {
+        return NULL;
+    }
+
+    // non empty list 
+    Node *curr = head;
+
+    while (curr != NULL)
+    {
+        if (curr->next != NULL && curr->data == curr->next->data)
+        {
+            Node *next_next = curr->next->next;
+            Node *nodeToDelete = curr->next;
+            delete nodeToDelete;
+            curr -> next = next_next;
+        }
+        else
+        {
+            curr = curr->next;
+        }
+    }
+
+    return head;
+}
+
+// unsorted linked list
+// brute fore O(n^2)
+
+Node *removeDuplicatesUnsorted(Node *head)
+{
+    if (head == NULL)
+    {
+        return NULL;
+    }
+
+    Node *curr = head;
+
+    while (curr != NULL)
+    {
+        Node *temp = curr;
+
+        while (temp->next != NULL)
+        {
+            if (curr->data == temp->next->data)
+            {
+                Node *nodeToDelete = temp->next;
+
+                temp->next = temp->next->next;
+
+                delete nodeToDelete;
+            }
+            else
+            {
+                temp = temp->next;
+            }
+        }
+
+        curr = curr->next;
+    }
+
+    return head;
+}
 // ================= MAIN =================
 
 int main()
@@ -438,7 +505,7 @@ int main()
     Node *tail = node1;
 
     // Insert elements
-    insertAtTail(head, tail, 10);
+    //insertAtTail(head, tail, 10);
     insertAtTail(head, tail, 12);
     insertAtTail(head, tail, 15);
 
@@ -446,7 +513,11 @@ int main()
     // print(head);
 
     // Insert at position
-    insertAtPosition(head, tail, 2, 11);
+   // insertAtPosition(head, tail, 2, 10);
+    //insertAtPosition(head, tail, 3, 10);
+    insertAtPosition(head, tail, 7, 11);
+    //insertAtPosition(head, tail, 8, 11);
+    //insertAtPosition(head, tail, 9, 11);
 
     // cout << "After inserting 11 at position 2: ";
     // print(head);
@@ -459,11 +530,13 @@ int main()
 
     // Insert at tail
     insertAtTail(head, tail, 20);
-
+    insertAtTail(head, tail, 45);
+    insertAtTail(head, tail, 23);
+    
     // cout << "After inserting 20 at tail: ";
     print(head);
 
-    tail->next = head->next;
+    // tail->next = head->next;
 
     cout << "\nHead: " << head->data << endl;
     cout << "Tail: " << tail->data << endl;
@@ -500,18 +573,18 @@ int main()
     //     // cout << "List is empty!" << endl;
     // }
 
-    // head = K_reverse(head, 2);
-    // Node *temp2 = head;
+    head = K_reverse(head, 5);
+    Node *temp2 = head;
 
-    // while (temp2 != NULL && temp2->next != NULL)
-    // {
-    //     temp2 = temp2->next;
-    // }
+    while (temp2 != NULL && temp2->next != NULL)
+    {
+     temp2 = temp2->next;
+     }
 
-    // tail = temp2;
+    tail = temp2;
 
-    // cout << "After K-reversal (k=2): ";
-    // print(head);
+    cout << "After K-reversal (k=5): ";
+    print(head);
     // cout << "New Head: " << head->data << endl;
     // cout << "New Tail: " << tail->data << endl;
 
@@ -526,22 +599,27 @@ int main()
     //     cout << "Linked List is NOT Circular" << endl;
     // }
 
-    if (floydDetectLoop(head) != NULL)
-    {
-        cout << "Cycle is present" << endl;
-        Node *start = getStartingNode(head);
-        if (start != NULL)
-        {
-            cout << "Loop starting at: " << start->data << endl;
-        }
-    }
-    else
-    {
-        cout << "no cycle" << endl;
-    }
+    // if (floydDetectLoop(head) != NULL)
+    // {
+    //     cout << "Cycle is present" << endl;
+    //     Node *start = getStartingNode(head);
+    //     if (start != NULL)
+    //     {
+    //         cout << "Loop starting at: " << start->data << endl;
+    //     }
+    // }
+    // else
+    // {
+    //     cout << "no cycle" << endl;
+    // }
 
-    removeLoop(head);
-    print(head);
+    // removeLoop(head);
+   // print(head);
+
+    //removeDupicates(head);
+   
+    // removeDuplicatesUnsorted(head);
+    // print(head);
 
     return 0;
 }
