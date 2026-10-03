@@ -438,7 +438,7 @@ Node *removeDupicates(Node *head)
         return NULL;
     }
 
-    // non empty list 
+    // non empty list
     Node *curr = head;
 
     while (curr != NULL)
@@ -448,7 +448,7 @@ Node *removeDupicates(Node *head)
             Node *next_next = curr->next->next;
             Node *nodeToDelete = curr->next;
             delete nodeToDelete;
-            curr -> next = next_next;
+            curr->next = next_next;
         }
         else
         {
@@ -505,7 +505,7 @@ int main()
     Node *tail = node1;
 
     // Insert elements
-    //insertAtTail(head, tail, 10);
+    // insertAtTail(head, tail, 10);
     insertAtTail(head, tail, 12);
     insertAtTail(head, tail, 15);
 
@@ -513,11 +513,11 @@ int main()
     // print(head);
 
     // Insert at position
-   // insertAtPosition(head, tail, 2, 10);
-    //insertAtPosition(head, tail, 3, 10);
+    // insertAtPosition(head, tail, 2, 10);
+    // insertAtPosition(head, tail, 3, 10);
     insertAtPosition(head, tail, 7, 11);
-    //insertAtPosition(head, tail, 8, 11);
-    //insertAtPosition(head, tail, 9, 11);
+    // insertAtPosition(head, tail, 8, 11);
+    // insertAtPosition(head, tail, 9, 11);
 
     // cout << "After inserting 11 at position 2: ";
     // print(head);
@@ -532,7 +532,7 @@ int main()
     insertAtTail(head, tail, 20);
     insertAtTail(head, tail, 45);
     insertAtTail(head, tail, 23);
-    
+
     // cout << "After inserting 20 at tail: ";
     print(head);
 
@@ -578,8 +578,8 @@ int main()
 
     while (temp2 != NULL && temp2->next != NULL)
     {
-     temp2 = temp2->next;
-     }
+        temp2 = temp2->next;
+    }
 
     tail = temp2;
 
@@ -614,12 +614,13 @@ int main()
     // }
 
     // removeLoop(head);
-   // print(head);
+    // print(head);
 
-    //removeDupicates(head);
-   
+    // removeDupicates(head);
+
     // removeDuplicatesUnsorted(head);
     // print(head);
 
     return 0;
 }
+
