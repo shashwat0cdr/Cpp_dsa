@@ -5,12 +5,14 @@ using namespace std;
 // NODE
 // ============================================
 
-class ListNode {
+class ListNode
+{
 public:
     int val;
-    ListNode* next;
+    ListNode *next;
 
-    ListNode(int data) {
+    ListNode(int data)
+    {
         val = data;
         next = nullptr;
     }
@@ -20,15 +22,18 @@ public:
 // INSERT AT TAIL
 // ============================================
 
-void insertAtTail(ListNode*& head, ListNode*& tail, int value) {
+void insertAtTail(ListNode *&head, ListNode *&tail, int value)
+{
 
-    ListNode* temp = new ListNode(value);
+    ListNode *temp = new ListNode(value);
 
-    if (head == nullptr) {
+    if (head == nullptr)
+    {
         head = temp;
         tail = temp;
     }
-    else {
+    else
+    {
         tail->next = temp;
         tail = temp;
     }
@@ -38,9 +43,11 @@ void insertAtTail(ListNode*& head, ListNode*& tail, int value) {
 // PRINT LINKED LIST
 // ============================================
 
-void print(ListNode* head) {
+void print(ListNode *head)
+{
 
-    while (head != nullptr) {
+    while (head != nullptr)
+    {
         cout << head->val << " -> ";
         head = head->next;
     }
@@ -52,11 +59,13 @@ void print(ListNode* head) {
 // DELETE LINKED LIST
 // ============================================
 
-void deleteList(ListNode*& head) {
+void deleteList(ListNode *&head)
+{
 
-    while (head != nullptr) {
+    while (head != nullptr)
+    {
 
-        ListNode* temp = head;
+        ListNode *temp = head;
         head = head->next;
 
         delete temp;
@@ -67,47 +76,53 @@ void deleteList(ListNode*& head) {
 // SOLUTION
 // ============================================
 
-class Solution {
+class Solution
+{
 
 private:
+    void insertAtTail(ListNode *&head,
+                      ListNode *&tail,
+                      int value)
+    {
 
-    void insertAtTail(ListNode*& head,
-                      ListNode*& tail,
-                      int value) {
+        ListNode *temp = new ListNode(value);
 
-        ListNode* temp = new ListNode(value);
-
-        if (head == nullptr) {
+        if (head == nullptr)
+        {
             head = temp;
             tail = temp;
         }
-        else {
+        else
+        {
             tail->next = temp;
             tail = temp;
         }
     }
 
 public:
-
-    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+    ListNode *addTwoNumbers(ListNode *l1, ListNode *l2)
+    {
 
         int carry = 0;
 
-        ListNode* ansHead = nullptr;
-        ListNode* ansTail = nullptr;
+        ListNode *ansHead = nullptr;
+        ListNode *ansTail = nullptr;
 
         while (l1 != nullptr ||
                l2 != nullptr ||
-               carry != 0) {
+               carry != 0)
+        {
 
             int val1 = 0;
             int val2 = 0;
 
-            if (l1 != nullptr) {
+            if (l1 != nullptr)
+            {
                 val1 = l1->val;
             }
 
-            if (l2 != nullptr) {
+            if (l2 != nullptr)
+            {
                 val2 = l2->val;
             }
 
@@ -124,12 +139,14 @@ public:
             insertAtTail(ansHead, ansTail, digit);
 
             // Move l1
-            if (l1 != nullptr) {
+            if (l1 != nullptr)
+            {
                 l1 = l1->next;
             }
 
             // Move l2
-            if (l2 != nullptr) {
+            if (l2 != nullptr)
+            {
                 l2 = l2->next;
             }
         }
@@ -142,7 +159,8 @@ public:
 // MAIN
 // ============================================
 
-int main() {
+int main()
+{
 
     Solution obj;
 
@@ -159,11 +177,11 @@ int main() {
     // 7 -> 0 -> 8
     // ============================================
 
-    ListNode* head1 = nullptr;
-    ListNode* tail1 = nullptr;
+    ListNode *head1 = nullptr;
+    ListNode *tail1 = nullptr;
 
-    ListNode* head2 = nullptr;
-    ListNode* tail2 = nullptr;
+    ListNode *head2 = nullptr;
+    ListNode *tail2 = nullptr;
 
     insertAtTail(head1, tail1, 2);
     insertAtTail(head1, tail1, 4);
@@ -183,13 +201,12 @@ int main() {
     cout << "List 2: ";
     print(head2);
 
-    ListNode* ans1 = obj.addTwoNumbers(head1, head2);
+    ListNode *ans1 = obj.addTwoNumbers(head1, head2);
 
     cout << "Answer: ";
     print(ans1);
 
     cout << endl;
-
 
     // ============================================
     // TEST CASE 2
@@ -203,11 +220,11 @@ int main() {
     // 0 -> 0 -> 0 -> 1
     // ============================================
 
-    ListNode* head3 = nullptr;
-    ListNode* tail3 = nullptr;
+    ListNode *head3 = nullptr;
+    ListNode *tail3 = nullptr;
 
-    ListNode* head4 = nullptr;
-    ListNode* tail4 = nullptr;
+    ListNode *head4 = nullptr;
+    ListNode *tail4 = nullptr;
 
     insertAtTail(head3, tail3, 9);
     insertAtTail(head3, tail3, 9);
@@ -225,13 +242,12 @@ int main() {
     cout << "List 2: ";
     print(head4);
 
-    ListNode* ans2 = obj.addTwoNumbers(head3, head4);
+    ListNode *ans2 = obj.addTwoNumbers(head3, head4);
 
     cout << "Answer: ";
     print(ans2);
 
     cout << endl;
-
 
     // ============================================
     // TEST CASE 3
@@ -245,11 +261,11 @@ int main() {
     // 0
     // ============================================
 
-    ListNode* head5 = nullptr;
-    ListNode* tail5 = nullptr;
+    ListNode *head5 = nullptr;
+    ListNode *tail5 = nullptr;
 
-    ListNode* head6 = nullptr;
-    ListNode* tail6 = nullptr;
+    ListNode *head6 = nullptr;
+    ListNode *tail6 = nullptr;
 
     insertAtTail(head5, tail5, 0);
     insertAtTail(head6, tail6, 0);
@@ -264,13 +280,12 @@ int main() {
     cout << "List 2: ";
     print(head6);
 
-    ListNode* ans3 = obj.addTwoNumbers(head5, head6);
+    ListNode *ans3 = obj.addTwoNumbers(head5, head6);
 
     cout << "Answer: ";
     print(ans3);
 
     cout << endl;
-
 
     // ============================================
     // TEST CASE 4
@@ -284,11 +299,11 @@ int main() {
     // 8 -> 9 -> 9 -> 0 -> 1
     // ============================================
 
-    ListNode* head7 = nullptr;
-    ListNode* tail7 = nullptr;
+    ListNode *head7 = nullptr;
+    ListNode *tail7 = nullptr;
 
-    ListNode* head8 = nullptr;
-    ListNode* tail8 = nullptr;
+    ListNode *head8 = nullptr;
+    ListNode *tail8 = nullptr;
 
     insertAtTail(head7, tail7, 9);
     insertAtTail(head7, tail7, 9);
@@ -309,13 +324,12 @@ int main() {
     cout << "List 2: ";
     print(head8);
 
-    ListNode* ans4 = obj.addTwoNumbers(head7, head8);
+    ListNode *ans4 = obj.addTwoNumbers(head7, head8);
 
     cout << "Answer: ";
     print(ans4);
 
     cout << endl;
-
 
     // ============================================
     // DELETE MEMORY
