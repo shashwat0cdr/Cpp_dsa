@@ -1,3 +1,9 @@
+// tree questions practice
+// 1. Height of Binary Tree
+// 2. Diameter of Binary Tree (Brute Force and Optimized)
+// 3. Balanced Binary Tree (Brute Force and Optimized)
+// 4. Identical / Same Tree
+// 5. Sum Tree (Optimized)
 
 #include <iostream>
 #include <algorithm>
